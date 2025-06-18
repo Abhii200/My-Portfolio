@@ -121,7 +121,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
             {/* Resume Button */}
             <a
-              href="https://drive.google.com/file/d/1DhnVTRq16-os7K-jWPwP1w9HWh2OxuLl/view?usp=sharing"
+              href="https://drive.google.com/file/d/1wPRbEB60zTjAKUiOIRLWHN-8kz2hMdoH/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl font-semibold"
