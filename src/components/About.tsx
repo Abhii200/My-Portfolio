@@ -67,7 +67,7 @@ const About = () => {
               <div className="space-y-4">
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-white rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <p>Full-stack web development with modern frameworks like React, Node.js, and Express</p>
+                  <p>Full-stack web development with modern frameworks like React, Node.js,fastapi and Express</p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-white rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -90,8 +90,8 @@ const About = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                <div className="text-2xl font-bold text-blue-600 mb-2">3+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Years Coding</div>
+                <div className="text-2xl font-bold text-blue-600 mb-2">Functional Team</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">SWECHA</div>
               </div>
               <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
                 <div className="text-2xl font-bold text-purple-600 mb-2">10+</div>
