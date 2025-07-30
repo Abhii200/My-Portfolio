@@ -49,7 +49,7 @@ const Skills = () => {
     {
       title: "Tools & Platforms",
       icon: <Cloud className="w-6 h-6" />,
-      skills: ["Git", "Docker", "VS Code", "Jupyter Notebook", "Google Colab", "Blender", "3D Maya", "ChatGPT", "Claude", "Mistral"],
+      skills: ["Git", "Docker", "VS Code", "Jupyter Notebook", "Google Colab", "Blender", "3D Maya", "ChatGPT", "Claude", "Mistral", "Azure"],
       gradient: "from-indigo-500 to-purple-500"
     }
   ];
