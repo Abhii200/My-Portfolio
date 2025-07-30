@@ -5,6 +5,18 @@ import { ExternalLink, Github, Database, Mouse } from 'lucide-react';
 const Projects = () => {
   const projects = [
     {
+      title: "DocuMind - AI Document Chat & Summarizer",
+      description: `Developed a full-stack web application using FastAPI (Python) and React.js that intelligently extracts text from PDFs and images through AI-powered OCR, automatically generates document summaries using Google Gemma 3n model and enables interactive Q&A conversations about content.\nImplemented advanced features including drag-and-drop file uploads, real-time chat interface, multi-model AI fallback systems.\nSuccessfully deployed on cloud platforms (Render/Vercel) with responsive UI design, RESTful API architecture, and integrated OpenRouter's dual AI model system (Llama Vision + Gemma) for enhanced document understanding and analysis.`,
+      technologies: ["FastAPI", "React.js", "OCR", "AI/ML", "Google Gemma", "OpenRouter", "Cloud Deployment"],
+      links: {
+        demo: "https://document-chat-summarizer.vercel.app/",
+        github: "#"
+      },
+      icon: <ExternalLink className="w-6 h-6" />,
+      gradient: "from-blue-400 to-purple-500",
+      image:"/lovable-uploads/image.png"
+    },
+    {
       title: "MAGICAL DB",
       description: "Developed a dynamic website for Hyderabad Central University to explore gene interactions. Used the MAGICAL DB platform to enhance data access and analysis, reducing research time by 50%. Optimized performance and implemented interactive visualizations using Cytoscape, aiding in valuable insights and informed decision-making.",
       technologies: ["JavaScript", "HTML", "CSS", "Cytoscape", "Data Visualization", "Database"],
@@ -58,12 +70,13 @@ const Projects = () => {
               className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:scale-105 hover:-translate-y-2"
             >
               {/* Project Header */}
-              <div className={`h-32 ${project.image ? '' : `bg-gradient-to-r ${project.gradient}`} p-6 flex items-center justify-center relative overflow-hidden`}>
+              <div className={`h-48 ${project.image ? '' : `bg-gradient-to-r ${project.gradient}`} p-6 flex items-center justify-center relative overflow-hidden`}>
                 {project.image ? (
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-lg"
+                    style={{ maxHeight: '160px', maxWidth: '100%' }}
                   />
                 ) : (
                   <div className="text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300">
