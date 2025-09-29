@@ -1,8 +1,13 @@
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 
 const Experience = () => {
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const experiences = [
     {
       title: "Software Engineer Intern",
@@ -39,10 +44,57 @@ const Experience = () => {
     }
   ];
 
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+
+          if (target === headerRef.current) {
+            setHeaderVisible(true);
+          } else {
+            const index = itemRefs.current.findIndex(ref => ref === target);
+            if (index !== -1) {
+              setVisibleItems(prev => new Set([...prev, index]));
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (headerRef.current) {
+      observerRef.current.observe(headerRef.current);
+    }
+
+    itemRefs.current.forEach((ref) => {
+      if (ref && observerRef.current) {
+        observerRef.current.observe(ref);
+      }
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
   return (
     <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ${
+            headerVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-8'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Professional Experience
           </h2>
@@ -54,15 +106,43 @@ const Experience = () => {
         <div className="max-w-4xl mx-auto">
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 to-purple-600 hidden md:block"></div>
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 to-purple-600 hidden md:block opacity-30"></div>
+            <div className={`absolute left-8 top-0 w-0.5 bg-gradient-to-b from-blue-600 to-purple-600 hidden md:block transition-all duration-2000 ${
+              visibleItems.size > 0 ? 'h-full opacity-100' : 'h-0 opacity-0'
+            }`}></div>
 
-            {experiences.map((exp, index) => (
-              <div key={index} className="relative mb-12 last:mb-0">
-                {/* Timeline Dot */}
-                <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full border-4 border-white dark:border-gray-800 hidden md:block"></div>
+            {experiences.map((exp, index) => {
+              const isVisible = visibleItems.has(index);
+              const delay = index * 200;
 
-                {/* Content */}
-                <div className="md:ml-16 bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+              return (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    itemRefs.current[index] = el;
+                  }}
+                  className={`relative mb-12 last:mb-0 transition-all duration-700 ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-12'
+                  }`}
+                  style={{
+                    transitionDelay: isVisible ? `${delay}ms` : '0ms'
+                  }}
+                >
+                  {/* Timeline Dot */}
+                  <div className={`absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full border-4 border-white dark:border-gray-800 hidden md:block transition-all duration-500 ${
+                    isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                  }`}
+                  style={{
+                    transitionDelay: isVisible ? `${delay + 300}ms` : '0ms'
+                  }}
+                  ></div>
+
+                  {/* Content */}
+                  <div className={`md:ml-16 bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-400/20 transition-all duration-500 overflow-hidden transform hover:scale-[1.02] hover:-translate-y-1 ${
+                    index % 2 === 0 ? 'hover:rotate-1' : 'hover:-rotate-1'
+                  }`}>
                   <div className="p-6 md:p-8">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                       <div>
@@ -104,9 +184,12 @@ const Experience = () => {
 
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech, i) => (
-                        <span 
+                        <span
                           key={i}
-                          className="px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium"
+                          className="px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 hover:shadow-md hover:bg-gradient-to-r hover:from-blue-200 hover:to-purple-200 dark:hover:from-blue-800 dark:hover:to-purple-800 cursor-default"
+                          style={{
+                            animationDelay: `${i * 50}ms`
+                          }}
                         >
                           {tech}
                         </span>
@@ -115,7 +198,8 @@ const Experience = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
