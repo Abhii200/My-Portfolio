@@ -39,7 +39,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto">
           {/* Profile Image */}
           <div className="mb-8">
-            <div className="w-38 h-38 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500/20 hover:ring-blue-500/40 transition-all duration-300 hover:scale-105">
+            <div className="w-56 h-56 md:w-72 md:h-72 mx-auto rounded-lg overflow-hidden shadow-2xl ring-4 ring-primary/20 hover:ring-primary/40 transition-all duration-300 hover:scale-105">
               <img
                 src="/lovable-uploads/82867db7-4170-4c1c-8a97-0e35519bc2cb.png"
                 alt="Abhinay Gedela"
